@@ -3,6 +3,7 @@ package com.driver;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -18,41 +19,53 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("books")
 public class BookController {
 
-    private List<Book> bookList;
-    private int id;
+//    private List<Book> bookList;
+//    private int id;
 
-    public List<Book> getBookList() {
-        return bookList;
-    }
+    @Autowired
+    BookService bookService;
 
-    public void setBookList(List<Book> bookList) {
-        this.bookList = bookList;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public BookController(){
-        this.bookList = new ArrayList<Book>();
-        this.id = 1;
-    }
+//    public List<Book> getBookList() {
+//        return bookList;
+//    }
+//
+//    public void setBookList(List<Book> bookList) {
+//        this.bookList = bookList;
+//    }
+//
+//    public int getId() {
+//        return id;
+//    }
+//
+//    public void setId(int id) {
+//        this.id = id;
+//    }
+//
+//    public BookController(){
+//        this.bookList = new ArrayList<Book>();
+//        this.id = 1;
+//    }
 
     // post request /create-book
     // pass book as request body
     @PostMapping("/create-book")
     public ResponseEntity<Book> createBook(@RequestBody Book book){
         // Your code goes here.
+        bookService.saveToDB(book);
         return new ResponseEntity<>(book, HttpStatus.CREATED);
     }
 
     // get request /get-book-by-id/{id}
     // pass id as path variable
     // getBookById()
+    @GetMapping("/get-book-by-id/{id}")
+    public ResponseEntity<Book> getBookById(@PathVariable("id") int id){
+        Book book = bookService.getBookFromDB(id);
+        if(book == null){
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(book, HttpStatus.FOUND);
+    }
 
     // delete request /delete-book-by-id/{id}
     // pass id as path variable
