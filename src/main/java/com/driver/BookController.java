@@ -70,12 +70,32 @@ public class BookController {
     // delete request /delete-book-by-id/{id}
     // pass id as path variable
     // deleteBookById()
+    @DeleteMapping("delete-book-by-id/{id}")
+    public ResponseEntity<String> deleteBookById(@PathVariable("id") int id){
+        Book book = bookService.deleteBookFromDB(id);
+        if(book == null){
+            return new ResponseEntity<>("Book not found", HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>("Book " + id + " successfully deleted", HttpStatus.FOUND);
+    }
+
 
     // get request /get-all-books
     // getAllBooks()
+    @GetMapping("/get-all-books")
+    public ResponseEntity<List<Book>> getAllBooks(){
+        return new ResponseEntity<>(bookService.getAllBooksFromDB(), HttpStatus.OK);
+    }
+
 
     // delete request /delete-all-books
     // deleteAllBooks()
+    public ResponseEntity<String> deleteAllBooks(){
+        bookService.deleteAllBooksFromDB();
+        return new ResponseEntity<>("All books deleted successfully", HttpStatus.OK);
+    }
+
+
 
     // get request /get-books-by-author
     // pass author name as request param

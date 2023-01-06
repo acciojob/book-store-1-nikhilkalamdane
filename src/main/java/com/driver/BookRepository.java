@@ -3,7 +3,9 @@ package com.driver;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 @Repository
 @Component
@@ -26,5 +28,26 @@ public class BookRepository {
             return null;
         }
 
+    }
+
+    public List<Book> findAllBooks(){
+        List<Book> newBookList = new ArrayList<>();
+        for(Book b : bookList.values()){
+            newBookList.add(b);
+        }
+
+        return newBookList;
+    }
+
+    public Book deleteBookByID(int id){
+        if(bookList.containsKey(id)){
+            return bookList.remove(id);
+        }else{
+            return null;
+        }
+    }
+
+    public void deleteAllBooks(){
+        bookList.clear();
     }
 }

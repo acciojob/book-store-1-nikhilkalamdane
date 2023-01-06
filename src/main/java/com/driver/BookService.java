@@ -5,6 +5,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @Component
 public class BookService {
@@ -17,5 +19,17 @@ public class BookService {
 
     public Book getBookFromDB(int id){
         return bookRepository.findBookByID(id);
+    }
+
+    public Book deleteBookFromDB(int id){
+        return bookRepository.deleteBookByID(id);
+    }
+
+    public List<Book> getAllBooksFromDB(){
+        return bookRepository.findAllBooks();
+    }
+
+    public void deleteAllBooksFromDB(){
+        bookRepository.deleteAllBooks();
     }
 }
