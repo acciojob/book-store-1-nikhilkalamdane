@@ -22,8 +22,7 @@ public class BookController {
     private List<Book> bookList;
     private int id;
 
-    @Autowired
-    BookService bookService;
+
 
     public List<Book> getBookList() {
         return bookList;
@@ -43,7 +42,7 @@ public class BookController {
 
     public BookController(){
         this.bookList = new ArrayList<Book>();
-        this.id = 1;
+        this.id = 0;
     }
 
     // post request /create-book
