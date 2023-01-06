@@ -22,8 +22,7 @@ public class BookController {
     private List<Book> bookList;
     private int id;
 
-    @Autowired
-    BookService bookService;
+
 
     public List<Book> getBookList() {
         return bookList;
@@ -51,7 +50,7 @@ public class BookController {
     @PostMapping("/create-book")
     public ResponseEntity<Book> createBook(@RequestBody Book book){
         // Your code goes here.
-        bookService.saveToDB(book);
+        bookList.add(book);
         return new ResponseEntity<>(book, HttpStatus.CREATED);
     }
 
@@ -60,11 +59,11 @@ public class BookController {
     // getBookById()
     @GetMapping("/get-book-by-id/{id}")
     public ResponseEntity<Book> getBookById(@PathVariable("id") int id){
-        Book book = bookService.getBookFromDB(id);
-        if(book == null){
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        for(int i =0 ; i < bookList.size(); i++){
+            if(bookList.get(i).getId() == id)
+                return new ResponseEntity<>(bookList.get(i),HttpStatus.OK);
         }
-        return new ResponseEntity<>(book, HttpStatus.FOUND);
+        return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
     }
 
     // delete request /delete-book-by-id/{id}
@@ -72,11 +71,13 @@ public class BookController {
     // deleteBookById()
     @DeleteMapping("delete-book-by-id/{id}")
     public ResponseEntity<String> deleteBookById(@PathVariable("id") int id){
-        Book book = bookService.deleteBookFromDB(id);
-        if(book == null){
-            return new ResponseEntity<>("Book not found", HttpStatus.NOT_FOUND);
+        for(int i =0;i<bookList.size();i++){
+            if(bookList.get(i).getId() == id) {
+                bookList.remove(i);
+                return new ResponseEntity<>("Successfully Deleted!",HttpStatus.OK);
+            }
         }
-        return new ResponseEntity<>("Book " + id + " successfully deleted", HttpStatus.FOUND);
+        return new ResponseEntity<>("Book not found",HttpStatus.NOT_FOUND);
     }
 
 
@@ -84,15 +85,15 @@ public class BookController {
     // getAllBooks()
     @GetMapping("/get-all-books")
     public ResponseEntity<List<Book>> getAllBooks(){
-        return new ResponseEntity<>(bookService.getAllBooksFromDB(), HttpStatus.OK);
+        return new ResponseEntity<>(bookList,HttpStatus.OK);
     }
 
 
     // delete request /delete-all-books
     // deleteAllBooks()
     public ResponseEntity<String> deleteAllBooks(){
-        bookService.deleteAllBooksFromDB();
-        return new ResponseEntity<>("All books deleted successfully", HttpStatus.OK);
+        bookList = new ArrayList<Book>();
+        return new ResponseEntity<>("All books successfully deleted",HttpStatus.OK);
     }
 
 
@@ -102,8 +103,12 @@ public class BookController {
     // getBooksByAuthor()
     @GetMapping("/get-books-by-author?author=author+name")
     public ResponseEntity<List<Book>> getBooksByAuthor(@RequestParam("author") String author){
-        List<Book>  list = bookService.findBooksByAuthor(author);
-        return new ResponseEntity<>(list, HttpStatus.FOUND);
+        List<Book> booksByAuthor = new ArrayList<>();
+        for(int i =0;i<bookList.size();i++){
+            if(bookList.get(i).getAuthor().equals(author))
+                booksByAuthor.add(bookList.get(i));
+        }
+        return new ResponseEntity<>(booksByAuthor,HttpStatus.OK);
     }
 
 
@@ -112,7 +117,11 @@ public class BookController {
     // getBooksByGenre()
     @GetMapping("/get-books-by-genre?genre=genre+name")
     public ResponseEntity<List<Book>> getBooksByGenre(@RequestParam("genre") String genre){
-        List<Book>  list = bookService.findBooksByGenre(genre);
-        return new ResponseEntity<>(list, HttpStatus.FOUND);
+        List<Book> booksByGenre = new ArrayList<>();
+        for(int i =0;i<bookList.size();i++){
+            if(bookList.get(i).getGenre().equals(genre))
+                booksByGenre.add(bookList.get(i));
+        }
+        return new ResponseEntity<>(booksByGenre,HttpStatus.OK);
     }
 }
