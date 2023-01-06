@@ -100,8 +100,19 @@ public class BookController {
     // get request /get-books-by-author
     // pass author name as request param
     // getBooksByAuthor()
+    @GetMapping("/get-books-by-author?author=author+name")
+    public ResponseEntity<List<Book>> findBooksByAuthor(@RequestParam("author") String author){
+        List<Book>  list = bookService.findBooksByAuthor(author);
+        return new ResponseEntity<>(list, HttpStatus.FOUND);
+    }
+
 
     // get request /get-books-by-genre
     // pass genre name as request param
     // getBooksByGenre()
+    @GetMapping("/get-books-by-genre?genre=genre+name")
+    public ResponseEntity<List<Book>> findBooksByGenre(@RequestParam("genre") String genre){
+        List<Book>  list = bookService.findBooksByGenre(genre);
+        return new ResponseEntity<>(list, HttpStatus.FOUND);
+    }
 }

@@ -32,4 +32,12 @@ public class BookService {
     public void deleteAllBooksFromDB(){
         bookRepository.deleteAllBooks();
     }
+
+    public List<Book> findBooksByAuthor(String author){
+        return bookRepository.findBooksByAuthor(author);
+    }
+
+    public List<Book> findBooksByGenre(String genre){
+        return bookRepository.findBooksByGenre(genre);
+    }
 }

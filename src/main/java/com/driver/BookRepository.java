@@ -50,4 +50,28 @@ public class BookRepository {
     public void deleteAllBooks(){
         bookList.clear();
     }
+
+    public List<Book> findBooksByAuthor(String author){
+        List<Book> list = new ArrayList<>();
+        for(Book b : bookList.values()){
+            if(b.getAuthor().equals(author)){
+                list.add(b);
+            }
+        }
+
+        return list;
+    }
+
+    public List<Book> findBooksByGenre(String genre){
+        List<Book> list = new ArrayList<>();
+        for(Book b : bookList.values()){
+            if(b.getGenre().equals(genre)){
+                list.add(b);
+            }
+        }
+
+        return list;
+
+
+    }
 }
