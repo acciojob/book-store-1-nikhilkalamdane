@@ -10,8 +10,15 @@ import java.util.List;
 @Repository
 @Component
 public class BookRepository {
-    HashMap<Integer, Book> bookList = new HashMap<>();
-    int book_id = 0;
+
+    HashMap<Integer, Book> bookList;
+    int book_id;
+    BookRepository(){
+        bookList = new HashMap<>();
+        book_id = 1;
+    }
+
+
 
 
     public void save(Book book){
