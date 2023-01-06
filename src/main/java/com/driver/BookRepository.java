@@ -15,17 +15,17 @@ public class BookRepository {
     int book_id;
     BookRepository(){
         bookList = new HashMap<>();
-        book_id = 1;
+        book_id = 0;
     }
 
 
 
 
-    public void save(Book book){
-        book_id = bookList.size() + 1;
+    public Book save(Book book){
         book.setId(book_id);
         bookList.put(book_id, book);
-        return;
+        book_id++;
+        return book;
     }
 
     public Book findBookByID(int id){

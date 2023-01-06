@@ -51,8 +51,8 @@ public class BookController {
     @PostMapping("/create-book")
     public ResponseEntity<Book> createBook(@RequestBody Book book){
         // Your code goes here.
-        bookService.saveToDB(book);
-        return new ResponseEntity<>(book, HttpStatus.CREATED);
+        Book b = bookService.saveToDB(book);
+        return new ResponseEntity<>(b, HttpStatus.CREATED);
     }
 
     // get request /get-book-by-id/{id}
