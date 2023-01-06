@@ -19,32 +19,32 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("books")
 public class BookController {
 
-//    private List<Book> bookList;
-//    private int id;
+    private List<Book> bookList;
+    private int id;
 
     @Autowired
     BookService bookService;
 
-//    public List<Book> getBookList() {
-//        return bookList;
-//    }
-//
-//    public void setBookList(List<Book> bookList) {
-//        this.bookList = bookList;
-//    }
-//
-//    public int getId() {
-//        return id;
-//    }
-//
-//    public void setId(int id) {
-//        this.id = id;
-//    }
-//
-//    public BookController(){
-//        this.bookList = new ArrayList<Book>();
-//        this.id = 1;
-//    }
+    public List<Book> getBookList() {
+        return bookList;
+    }
+
+    public void setBookList(List<Book> bookList) {
+        this.bookList = bookList;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public BookController(){
+        this.bookList = new ArrayList<Book>();
+        this.id = 1;
+    }
 
     // post request /create-book
     // pass book as request body
